@@ -7,7 +7,7 @@ $().ready ->
       savedEarthquake.set
         mag:          earthquake["properties"]["mag"]
         place:        earthquake["properties"]["place"]
-        time:         earthquake["properties"]["time"]
+        time:         new Date earthquake["properties"]["time"]
         title:        earthquake["properties"]["title"]
         url:          earthquake["properties"]["url"]
         coordinates:  earthquake["geometry"]["coordinates"]
@@ -24,17 +24,24 @@ app.on 'start', ->
   earthquakesView = new EarthquakesView
     collection: earthquakes
   app.mainRegion.show(earthquakesView)
-  console.log 'started'
-  console.log(earthquakes)
+  menuView = new MenuView
+  app.menuRegion.show(menuView)
   Backbone.history.start()
 
 
 # regions
-region = new Backbone.Marionette.Region
-  el: '#content'
-
 app.addRegions
+  menuRegion: '#menu'
   mainRegion: '#content'
+
+
+class MenuView extends Marionette.LayoutView
+  template: "#menu-template",
+  events:
+    "click #highest-first": () -> earthquakes.orderBy "magHighest"
+    "click #lowest-first": () -> earthquakes.orderBy "magLowest"
+    "click #most-recent": () -> earthquakes.orderBy "timeMostRecent"
+    "click #least-recent": () -> -earthquakes.orderBy "timeLeastRecent"
 
 
 # create model to temporarily store data
@@ -43,7 +50,20 @@ class Earthquake extends Backbone.Model
 
 # collection
 class Earthquakes extends Backbone.Collection
-  model: Earthquake
+  model: Earthquake,
+  orderKey: "mag",
+  comparator: (earthquake) ->
+    if @orderKey == "magHighest"
+      -earthquake.get "mag"
+    else if @orderKey == "magLowest"
+      earthquake.get "mag"
+    else if @orderKey == "timeMostRecent"
+      - earthquake.get "time"
+    else if @orderKey == "timeLeastRecent"
+      earthquake.get "time"
+  orderBy: (columnName) ->
+    @orderKey = columnName
+    @sort()
 
 
 # views

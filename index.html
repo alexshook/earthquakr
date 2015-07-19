@@ -21,6 +21,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/index.css">
 
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -36,17 +37,33 @@
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="header">[earthquakr]</div>
+  <div class="header centered">
+    <h1>[earthquakr]</h1>
+  </div>
   <div class="container">
-    <div id="content">
 
+    <div id="menu" class="centered">
+      <script type="text/template" id="menu-template">
+        <h4>sort by: </h4>
+        <h5>magnitude</h5>
+        <button id="highest-first">highest first</button>
+        <button id="lowest-first">lowest first</button>
+
+        <br />
+        <h5>time occurred</h5>
+        <button id="most-recent">most recent first</button>
+        <button id="least-recent">least recent first</button>
+      </script>
+    </div>
+
+    <div id="content">
       <script type="text/template" id="earthquakes-table-template">
       <table>
         <thead>
           <tr>
             <th>Magnitude</th>
-            <th>Location (place)</th>
-            <th>Time</th>
+            <th>Location</th>
+            <th>Time Occurred</th>
           </tr>
         </thead>
         <tbody></tbody>
