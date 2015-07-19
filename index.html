@@ -25,7 +25,7 @@
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.9.3/coffee-script.min.js" type="text/javascript"></script>
+  <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.9.3/coffee-script.min.js" type="text/javascript"></script> -->
   <script src="js/lib/underscore-min.js" type="text/javascript"></script>
   <script src="js/lib/backbone-min.js" type="text/javascript"></script>
   <script src="js/lib/backbone.marionette.bundle.min.js" type="text/javascript"></script>
@@ -36,9 +36,30 @@
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="header">[earthquakr]</div>
   <div class="container">
-    inside the container div
-    <div id="content"></div>
+    <div id="content">
+
+      <script type="text/template" id="earthquakes-table-template">
+      <table>
+        <thead>
+          <tr>
+            <th>Magnitude</th>
+            <th>Location (place)</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      </script>
+
+      <script type="text/template" id="earthquake-row-template">
+        <td><%= mag %></td>
+        <td><%= place %></td>
+        <td><%= time %></td>
+      </script>
+
+    </div>
   </div>
 
 <!-- End Document
