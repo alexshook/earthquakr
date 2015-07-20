@@ -67,7 +67,7 @@ MenuView = (function(superClass) {
       return earthquakes.orderBy("timeMostRecent");
     },
     "click #least-recent": function() {
-      return -earthquakes.orderBy("timeLeastRecent");
+      return earthquakes.orderBy("timeLeastRecent");
     }
   };
 

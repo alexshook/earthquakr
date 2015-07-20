@@ -41,7 +41,7 @@ class MenuView extends Marionette.LayoutView
     "click #highest-first": () -> earthquakes.orderBy "magHighest"
     "click #lowest-first": () -> earthquakes.orderBy "magLowest"
     "click #most-recent": () -> earthquakes.orderBy "timeMostRecent"
-    "click #least-recent": () -> -earthquakes.orderBy "timeLeastRecent"
+    "click #least-recent": () -> earthquakes.orderBy "timeLeastRecent"
 
 
 # create model to temporarily store data
