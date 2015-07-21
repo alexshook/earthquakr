@@ -42,6 +42,7 @@ app.on('start', function() {
   mapView = new MapView;
   app.mapRegion.show(mapView);
   mapView.startMap(mapView.mapOptions);
+  mapView.addMarkers(earthquakes);
   return Backbone.history.start();
 });
 
@@ -93,18 +94,27 @@ MapView = (function(superClass) {
   MapView.prototype.className = 'map-section';
 
   MapView.prototype.mapOptions = {
-    zoom: 3,
+    zoom: 2,
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
     center: {
-      lat: -34.397,
-      lng: 150.644
+      lat: -10.4436,
+      lng: 165.1715
     }
   };
 
   MapView.prototype.startMap = function(mapOptions) {
-    var map;
-    console.log('started map');
-    console.log(mapOptions);
-    return map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    return window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+  };
+
+  MapView.prototype.addMarkers = function() {
+    return _.map(earthquakes['models'], function(earthquake) {
+      var latLng, marker;
+      latLng = new google.maps.LatLng(earthquake['attributes']['coordinates'][1], earthquake['attributes']['coordinates'][0]);
+      marker = new google.maps.Marker({
+        position: latLng
+      });
+      return marker.setMap(map);
+    });
   };
 
   return MapView;

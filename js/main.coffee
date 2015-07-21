@@ -24,11 +24,16 @@ app.on 'start', ->
   earthquakesView = new EarthquakesView
     collection: earthquakes
   app.mainRegion.show(earthquakesView)
+
   menuView = new MenuView
   app.menuRegion.show(menuView)
+
   mapView = new MapView
   app.mapRegion.show(mapView)
+
   mapView.startMap(mapView.mapOptions)
+  mapView.addMarkers(earthquakes)
+
   Backbone.history.start()
 
 
@@ -39,6 +44,7 @@ app.addRegions
   mapRegion: '#map'
 
 
+# render menu options
 class MenuView extends Marionette.LayoutView
   template: "#menu-template",
   events:
@@ -54,14 +60,36 @@ class MapView extends Marionette.LayoutView
   tagName: 'div',
   className: 'map-section',
   mapOptions:
-    zoom: 3,
+    zoom: 2,
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
     center:
-      lat: -34.397
-      lng: 150.644
+      lat: -10.4436
+      lng: 165.1715
   startMap: (mapOptions) ->
-    console.log 'started map'
-    console.log mapOptions
-    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions)
+    window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions)
+  addMarkers: ->
+    _.map earthquakes['models'], (earthquake) ->
+      latLng = new google.maps.LatLng(earthquake['attributes']['coordinates'][1], earthquake['attributes']['coordinates'][0])
+      marker = new google.maps.Marker
+        position: latLng,
+      marker.setMap(map)
+
+
+# display earthquake locations on map
+# class EarthquakesMapView extends Marionette.CompositeView
+#   tagName: "div",
+#   id: 'map-canvas'
+#   # childView: EarthquakeView,
+#   # childViewContainer: "tbody",
+#   template: "#map-canvas-template"
+#   addMarker: ->
+#     console.log 'addMarker function'
+#     latLng = new google.maps.LatLng(150.644, -34.397)
+#     marker = new google.maps.Marker
+#       position: latLng,
+#       # setMap: map
+#     marker.setMap(map)
+#     console.log marker
 
 
 # create model to temporarily store data
