@@ -24,8 +24,16 @@ app.on 'start', ->
   earthquakesView = new EarthquakesView
     collection: earthquakes
   app.mainRegion.show(earthquakesView)
+
   menuView = new MenuView
   app.menuRegion.show(menuView)
+
+  mapView = new MapView
+  app.mapRegion.show(mapView)
+
+  mapView.startMap(mapView.mapOptions)
+  mapView.addMarkers(earthquakes)
+
   Backbone.history.start()
 
 
@@ -33,8 +41,10 @@ app.on 'start', ->
 app.addRegions
   menuRegion: '#menu'
   mainRegion: '#content'
+  mapRegion: '#map'
 
 
+# render menu options
 class MenuView extends Marionette.LayoutView
   template: "#menu-template",
   events:
@@ -42,6 +52,27 @@ class MenuView extends Marionette.LayoutView
     "click #lowest-first": () -> earthquakes.orderBy "magLowest"
     "click #most-recent": () -> earthquakes.orderBy "timeMostRecent"
     "click #least-recent": () -> earthquakes.orderBy "timeLeastRecent"
+
+
+# view for displaying google map
+class MapView extends Marionette.LayoutView
+  template: "#map-canvas-template",
+  tagName: 'div',
+  className: 'map-section',
+  mapOptions:
+    zoom: 2,
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
+    center:
+      lat: -10.4436
+      lng: 165.1715
+  startMap: (mapOptions) ->
+    window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions)
+  addMarkers: ->
+    _.map earthquakes['models'], (earthquake) ->
+      latLng = new google.maps.LatLng(earthquake['attributes']['coordinates'][1], earthquake['attributes']['coordinates'][0])
+      marker = new google.maps.Marker
+        position: latLng,
+      marker.setMap(map)
 
 
 # create model to temporarily store data
