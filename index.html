@@ -28,7 +28,6 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCYHuswVcziuH83IxhM9xJaiDQhaYommc" type="text/javascript"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
-  <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.9.3/coffee-script.min.js" type="text/javascript"></script> -->
   <script src="js/lib/underscore-min.js" type="text/javascript"></script>
   <script src="js/lib/backbone-min.js" type="text/javascript"></script>
   <script src="js/lib/backbone.marionette.bundle.min.js" type="text/javascript"></script>
@@ -41,20 +40,17 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="header centered">
     <h1>[earthquakr]</h1>
+    <h5>Significant earthquakes in the past 30 days. Made with Marionette and CoffeeScript.</h5>
   </div>
   <div class="container">
 
     <div id="menu" class="centered">
       <script type="text/template" id="menu-template">
         <h4>sort by: </h4>
-        <h5>magnitude</h5>
-        <button id="highest-first">highest first</button>
-        <button id="lowest-first">lowest first</button>
-
-        <br />
-        <h5>time occurred</h5>
-        <button id="most-recent">most recent first</button>
-        <button id="least-recent">least recent first</button>
+        <a class="button" id="highest-first" href="#">highest magnitude</a>
+        <a class="button" id ="lowest-first" href="#">lowest magnitude</a>
+        <a class="button" id ="most-recent" href="#">most recent</a>
+        <a class="button" id ="least-recent" href="#">least recent</a>
       </script>
     </div>
 
