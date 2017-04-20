@@ -96,6 +96,7 @@
 
     MapView.prototype.mapOptions = {
       zoom: 2,
+      scrollwheel: false,
       mapTypeId: google.maps.MapTypeId.TERRAIN,
       center: {
         lat: -10.4436,
